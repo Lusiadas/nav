@@ -1,30 +1,24 @@
-# nav
-
-> *A plugin for [Oh My Fish](https://www.github.com/oh-my-fish/oh-my-fish).*
-
 [![GPL License](https://img.shields.io/badge/license-GPL-blue.svg?longCache=true&style=flat-square)](/LICENSE)
 [![Fish Shell Version](https://img.shields.io/badge/fish-v3.0.1-blue.svg?style=flat-square)](https://fishshell.com)
 [![Oh My Fish Framework](https://img.shields.io/badge/Oh%20My%20Fish-Framework-blue.svg?style=flat-square)](https://www.github.com/oh-my-fish/oh-my-fish)
 
-<br/>
+# nav
+
+> A plugin for [Oh My Fish](https://www.github.com/oh-my-fish/oh-my-fish)
+
+**Navigational Assistance with Velocity**. In brief, it finds a folder whose name matches search patterns and makes it the current working directory. Ambiguities prompt the user to choose a directory from a list ordered on the basis of folders that have been used most often and most recently.
 
 ## Summary
 
-### [1. Description](#description)
+1. [Example Usage](#example-usage)
 
-### [2. Example Usage](#example-usage)
+2. [Options](#options)
 
-### [3. Options](#options)
+3. [Installation](#installation)
 
-### [4. Installation](#installation)
+4. [Configuration](#configuration)
 
-### [5. Configuration](#configuration)
-
-### [6. Thanks](#thanks)
-
-## Description
-
-**Navigational Assistance with Velocity**. In brief, it finds a folder whose name matches search patterns and makes it the current working directory. Ambiguities prompt the user to choose a directory from a list ordered on the basis of folders that have been used most often and most recently.
+5. [Thanks](#thanks)
 
 ## Example usage
 [![asciicast](https://asciinema.org/a/BVTfmYKMmB8baVXngV2dmeNwD.png)](https://asciinema.org/a/BVTfmYKMmB8baVXngV2dmeNwD)
@@ -126,7 +120,7 @@ omf install nav
 
 #### Required
 
-> If any of the following dependencies isn't installed, upon installing nav you'll be prompted to install them.
+If any of the following dependencies isn't installed, upon installing nav you'll be prompted to install them.
 
 ```
 curl contains_opts feedback grep percol mlocate sed tree
@@ -162,9 +156,3 @@ This script was inspired by, and was based on, the work of theses nice fellows:
 - [bd](https://github.com/vigneshwaranr/bd), by vigneshwaranr
 
 Also, it was written with the constant support of fish's [gitter channel](https://gitter.im/fish-shell/fish-shell).
-
-**Thank you all for your contributions!**
-
----
-
-Ⓐ Made in Anarchy. No wage slaves were economically coerced into the making of this work.
