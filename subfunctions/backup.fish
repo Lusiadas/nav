@@ -43,7 +43,7 @@ if string match -q restore $argv[1]
 #Saving a backup into a file
 else
   set -l bookmarks (find $_nav_bookmarks -type l 2>/dev/null \
-  | string match -r -- "(?<=$nav_bookmarks/).+")
+  | string match -r -- "(?<=$_nav_bookmarks/).+")
   if test "$argv[2]"
     source $_nav_functions/instructions.fish "nav -b/--backup"
     exit 1

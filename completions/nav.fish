@@ -1,5 +1,5 @@
 # Declare variables
-set -l opts t to w where f foward b back p prevd n nextd e echo c commander s save r remove m move l list a autoremove h help d backup x abbr
+set -l opts t to w where f forward b back p prevd n nextd e echo c commander s save r remove m move l list a autoremove h help d backup x abbr
 set -l cmd (command basename (status -f) | command cut -f 1 -d '.')
 
 # Load dependency
@@ -8,72 +8,53 @@ source -- $_nav_subfunctions/dependency.fish
 # Add options descriptions
 
 complete -fc $cmd -n "not contains_opts (string match -rv -- '^(e|echo|c|commander)\$' $opts)" \
--s t -l to \
--d 'Go to a bookmarked directory'
+-s t -l to -d 'Go to a bookmarked directory'
 
 complete -fc $cmd -n "not contains_opts (string match -rv -- '^(e|echo|c|commander)\$' $opts)" \
--s w -l where \
--d 'Go to a directory in the navigation history'
+-s w -l where -d 'Go to a directory in the navigation history'
 
 complete -c $cmd -n "not contains_opts (string match -rv -- '^(e|echo|c|commander)\$' $opts)" \
--s f -l foward \
--d 'Go to a child directory'
+-s f -l forward -d 'Go to a child directory'
 
 complete -fc $cmd -n "not contains_opts (string match -rv -- '^(e|echo|c|commander)\$' $opts)" \
--s b -l back \
--d 'Go to a parent directory'
+-s b -l back -d 'Go to a parent directory'
 
 complete -rc $cmd -n "not contains_opts (string match -rv -- '^(e|echo|c|commander)\$' $opts)" \
--s p -l prevd \
--d "Go to a previous directory"
+-s p -l prevd -d "Go to a previous directory"
 
 complete -rc $cmd -n "not contains_opts (string match -rv -- '^(e|echo|c|commander)\$' $opts)" \
--s n -l nextd \
--d "Go to a following directory"
+-s n -l nextd -d "Go to a following directory"
 
-complete -c $cmd -n "not contains_opts (string match -rv -- '^(t|to|w|where|f|foward|b|back)\$' $opts)" \
--s e -l echo \
--d 'Print destination instead'
+complete -c $cmd -n "not contains_opts (string match -rv -- '^(t|to|w|where|f|forward|b|back)\$' "\
+"$opts)" -s e -l echo -d 'Print destination instead'
 
-complete -c $cmd -n "not contains_opts (string match -rv -- '^(t|to|w|where|f|foward|b|back)\$' $opts)" \
--s c -l commander \
--d 'Open with midnight manager'
+complete -c $cmd -n "not contains_opts (string match -rv -- '^(t|to|w|where|f|forward|b|back)\$' "\
+"$opts)" -s c -l commander -d 'Open with midnight manager'
 
-complete -rc $cmd -n 'not contains_opts' \
--s s -l save \
--d 'Bookmark directory'
+complete -c $cmd -n "not contains_opts (string match -rv -- '^(t|to|w|where|f|forward|b|back)\$' "\
+"$opts)" -s R -l Ranger -d 'Open with ranger'
 
-complete -fc $cmd -n 'not contains_opts' \
--s r -l remove \
--d 'Remove bookmark'
+complete -rc $cmd -n 'not contains_opts' -s s -l save -d 'Bookmark directory'
 
-complete -fc $cmd -n 'not contains_opts' \
--s m -l move \
--d 'Move or rename bookmarks and bookmark folders'
+complete -fc $cmd -n 'not contains_opts' -s r -l remove -d 'Remove bookmark'
 
-complete -fc $cmd -n 'not contains_opts' \
--s l -l list \
--d 'List bookmarks'
+complete -fc $cmd -n 'not contains_opts' -s m -l move -d 'Move or rename bookmarks and bookmark '\
+'folders'
 
-complete -fc $cmd -n 'not contains_opts' \
--s a -l autoremove \
--d 'Remove bookmarks of directories that no longer exist'
+complete -fc $cmd -n 'not contains_opts' -s l -l list -d 'List bookmarks'
 
-complete -rc $cmd -n 'not contains_opts' \
--s d -l backup \
--d 'Save bookmarks into, or restore them from, a file'
+complete -fc $cmd -n 'not contains_opts' -s a -l autoremove -d 'Remove bookmarks of directories '\
+'that no longer exist'
 
-complete -c $cmd -n 'contains_opts d backup' \
--a 'restore' \
--d 'Restore bookmarks from a file'
+complete -rc $cmd -n 'not contains_opts' -s d -l backup -d 'Save bookmarks into, or restore them '\
+'from, a file'
 
-complete -fc $cmd -n 'not contains_opts' \
--s x -l abbr \
--d 'Add, or remove, abbreviations for iteractive use'
+complete -c $cmd -n 'contains_opts d backup' -a 'restore' -d 'Restore bookmarks from a file'
 
-complete -fc $cmd -n 'not contains_opts' \
--s h -l help \
--d 'Display instructions'
+complete -fc $cmd -n 'not contains_opts' -s x -l abbr -d 'Add, or remove, abbreviations for '\
+'interactive use'
+
+complete -fc $cmd -n 'not contains_opts' -s h -l help -d 'Display instructions'
 
 # List bookmarks
 if set -l bookmarks (command find $_nav_bookmarks -type l 2>/dev/null \

@@ -1,14 +1,14 @@
 set -l bld (set_color 00afff -o)
 set -l reg (set_color normal)
-set -l instructions $bld"nav - Navigational Assistance with Velocity
+set -l instructions $bld"⚓ nav - Navigational Assistance with Velocity
 
 "$bld"DESCRIPTION
 
-In brief, it finds a folder whose name matches search patterns and makes it the current working directory. Ambiguities prompt the user to choose a directory from a list ordered on the basis of folders that have been used most often and most recently.
+"$reg"In brief, it finds a folder whose name matches search patterns and makes it the current working directory. Ambiguities prompt the user to choose a directory from a list ordered on the basis of folders that have been used most often and most recently.
 
 "$bld"NAVIGATION OPTIONS
 
-"$bld"nav "$reg"[pattern] ...
+"$bld"nav"$reg" [pattern] ...
 If no argument is provided, list bookmarks. Otherwise, look for a directory in the navigation history that matches the patterns given and go there.
 
 "$bld"nav -w/--where"$reg" [pattern] ...
@@ -17,7 +17,7 @@ Go to a directory in the navigation history.
 "$bld"nav -t/--to"$reg" [pattern] ...
 Go to a bookmarked directory. If a matching bookmarked directory is not found, fallback to "$bld"--where"$reg" option.
 
-"$bld"nav -f/--foward"$reg" [pattern] ...
+"$bld"nav -f/--forward"$reg" [pattern] ...
 Go to the closest child folder that matches passed patterns.
 
 "$bld"nav -b/--back"$reg" [pattern] ...
@@ -58,7 +58,7 @@ Add, or otherwise remove, recommended abbreviations for iteractive use:
 
 "$bld"w"$reg" for "$bld"nav --where"$reg"
 "$bld"t"$reg" for "$bld"nav --to"$reg"
-"$bld"f"$reg" for "$bld"nav --foward"$reg"
+"$bld"f"$reg" for "$bld"nav --forward"$reg"
 "$bld"b"$reg" for "$bld"nav --back"$reg"
 "$bld"n"$reg" for "$bld"nextd"$reg"
 "$bld"p"$reg" for "$bld"prevd"$reg"
@@ -67,11 +67,12 @@ Add, or otherwise remove, recommended abbreviations for iteractive use:
 "$bld"nav -h/--help"$reg"
 Display these instructions.
 "
+
 switch "$argv"
-  case '*x/--\S+'
-    echo $instructions | grep -A 9 -E "$argv" 1>&2
-  case '*/--\S+'
-    echo $instructions | grep -A 1 -E "$argv" 1>&2
-  case ''
-    echo $instructions | less -R
+    case ''
+        echo $instructions | less -r
+    case 'nav -x/--abbr'
+        echo $instructions | grep -A 9 -E "$argv" 1>&2
+    case '*'
+        echo $instructions | grep -A 1 -E "$argv" 1>&2
 end

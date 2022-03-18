@@ -34,14 +34,14 @@ end
 # Check if the destination contains a preexisting bookmark
 if test -L $_nav_bookmarks/$argv[-1]
   if not set --query _flag_y
-    wrn "A bookmark |\$nav_bookmarks/$argv[-1]| already exists."
+    wrn "A bookmark |\$_nav_bookmarks/$argv[-1]| already exists."
     read -n 1 -P "Overwrite it? [y/n]: " | string match -qi y
     or exit 1
   end
-  command rm "$nav_bookmarks/$argv[-1]"
+  command rm "$_nav_bookmarks/$argv[-1]"
 end
 
 # Move bookmarks and folders
 command mkdir -p (string match -r ".+/" $_nav_bookmarks/$argv[-1])
-command mv "$nav_bookmarks/"{(string join , $argv)}
+command mv "$_nav_bookmarks/"{(string join , $argv)}
 win "Moved |"(string join '|, |' $argv[1..-2])"|, to |$argv[-1]|."
