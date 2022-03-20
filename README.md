@@ -40,7 +40,7 @@ Go to a directory in the navigation history.
 
 Go to a bookmarked directory.
 
-`nav -f/--foward [pattern] ...`
+`nav -f/--forward [pattern] ...`
 
 Go to the closest child folder that matches passed patterns.
 
@@ -104,7 +104,7 @@ Add, or otherwise remove, abbreviations for interactive use:
 
 - `w` for `nav --where`
 - `t` for `nav --to`
-- `f` for `nav --foward`
+- `f` for `nav --forward`
 - `b` for `nav --back`
 - `p` for `nav --prevd`
 - `n` for `nav --nextd`
