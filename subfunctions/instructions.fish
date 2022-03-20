@@ -1,6 +1,6 @@
 set -l bld (set_color 00afff -o)
 set -l reg (set_color normal)
-set -l instructions $bld"⚓ nav - Navigational Assistance with Velocity
+set -l instructions $bld"⚓ nav - Navigation Assistance with Velocity
 
 "$bld"DESCRIPTION
 

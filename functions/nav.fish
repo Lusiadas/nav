@@ -1,4 +1,4 @@
-function nav -d "⚓ Navigational Assistance with Velocity"
+function nav -d "⚓ Navigation Assistance with Velocity"
 
     # Check if required dependencies are installed and, if not, offer to have them installed.
     source $_nav_subfunctions/dependency.fish -n nav -p percol tree grep mlocate
