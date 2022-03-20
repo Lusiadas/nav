@@ -15,15 +15,15 @@ if test "$found"
         wrn 'The following abbreviations will be deleted: |'(string join '|, |' $found)'|.'
         read -n 1 -P 'Continue? [y/n]: ' | string match -qi y
         or exit 1
-  end
-  for match in $found
-      abbr -e $match
-  end
-  win 'Abbreviations removed'
+    end
+    for match in $found
+        abbr -e $match
+    end
+    win 'Abbreviations removed'
 else
     for i in (seq 1 2 (count $abbr))
         abbr -a $abbr[$i] nav $abbr[(math $i + 1)]
-  end
-  win 'Abbreviations added'
+    end
+    win 'Abbreviations added'
 end
 omf reload

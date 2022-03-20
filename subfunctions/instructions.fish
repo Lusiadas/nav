@@ -23,13 +23,22 @@ Go to the closest child folder that matches passed patterns.
 "$bld"nav -b/--back"$reg" [pattern] ...
 Go to the closest parent folder that matches passed patterns.
 
+"$bld"nav -p/--prevd"$reg" [pattern] ...
+Go to a previous folder in the navigation history.
+
+"$bld"nav -n/--nextd"$reg" [pattern] ...
+Got to one of the next folders in the navigation history.
+
 "$bld"NAVIGATION MODIFIER OPTIONS"$reg"
 
-"$bld"nav [-t/-w/-f/-b] -p/--print"$reg" [pattern] ...
+"$bld"nav [-t/-w/-f/-b] -e/--echo"$reg" [pattern] ...
 Print destination instead.
 
 "$bld"nav [-t/-w/-f/-b] -c/--commander"$reg" [first pattern] [, second pattern]
 Open directory using mc, a.k.a. the Midnight Commander. A directory can be opened for each panel by dividing search patterns using ','.
+
+"$bld"nav [-t/-w/-f/-b] -R/--ranger"$reg" [first pattern] [, second pattern] ...
+Open a directory, or some directories, using ranger. A directory can be opened in each tab by dividing search patterns using ','.
 
 "$bld"BOOKMARKING OPTIONS
 

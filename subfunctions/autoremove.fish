@@ -1,17 +1,16 @@
 # Check for invalid bookmarks
 set -l bookmarks
 for bookmark in (command find $_nav_bookmarks -type l 2>/dev/null)
-  string match -qr '(^/media/|.*/mtp:.*)' (command readlink $bookmark | string escape)
-  and continue
-  test -d "$bookmark"
-  and continue
-  set --append bookmarks $bookmark
+    string match -qr '(^/media/|.*/mtp:.*)' (command readlink $bookmark | string escape)
+    or test -d "$bookmark"
+    and continue
+    set --append bookmarks $bookmark
 end
 
 # Autoremove bookmarks
 if test -z "$bookmarks"
-  win "All bookmarks are valid"
-  exit 0
+    win "All bookmarks are valid"
+    exit 0
 end
 command rm $bookmarks
 set bookmarks (string match -r "(?<=$nav_bookmarks/).+" $bookmarks)

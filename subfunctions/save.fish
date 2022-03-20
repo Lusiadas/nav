@@ -73,8 +73,8 @@ for i in (command seq 1 2 (count $argv) | command sort -r)
     if contains -i $argv[$j] (readlink $bookmarks 2>/dev/null) 2>/dev/null \
     | read k
         if test -z "$k"
-            wrn "Directory |$path| already assigned to bookmark |"(command basename $bookmarks[$k])\
-            "|."
+            wrn "Directory |$path| already assigned to bookmark |"\
+            (command basename $bookmarks[$k])"|."
             if read -P "Replace it? [y/n]: " | string match -qvi y
                 dim "Skipped adding bookmark |$argv[$i]|."
                 continue

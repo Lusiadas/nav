@@ -64,11 +64,11 @@ Print destination instead.
 
 `nav [-t/-w/-f/-b] -c/--commander [pattern] ...`
 
-Open a directory, or some directories, using [mc](https://midnight-commander.org), the Midnight Commander. A directory can be opened in each panel by dividing search patterns using ','.
+Open a directory, or some directories, using [mc](https://midnight-commander.org), the Midnight Commander. A directory can be opened in each panel by dividing search patterns using `,`.
 
 `nav [-t/-w/-f/-b] -R/--ranger [pattern] ...`
 
-Open a directory, or some directories, using [ranger](https://ranger.github.io). Directories can be opened in different tabs by dividing search patterns with ','.
+Open a directory, or some directories, using [ranger](https://ranger.github.io). Directories can be opened in different tabs by dividing search patterns with `,`.
 
 ### Bookmarking
 
