@@ -5,35 +5,34 @@ set -l flag (set --name | string match -r -- '(?<=_flag_)[twfnpb]$')
 set -l matches
 set -l not_found
 
-# Check if the commander option was invoked
-if set --query _flag_c
-    if not type -qf mc
-        if not set --query _flag_y
-            wrn "The installation of |mc|, a.k.a. midnight commander, is necessary to use\
-            the |--commander| option"
-            read -n 1 -P "Install it? [y/n]:" | string match -qi y
+# Check if the file manager options were invoked
+if test -n "$_flag_c" -o -n "$_flag_e"
+    if set --query _flag_c
+        if not type -qf mc
+            if not set --query _flag_y
+                wrn "The installation of |mc|, a.k.a. midnight commander, is necessary to use\
+                the |--commander| option"
+                read -n 1 -P "Install it? [y/n]:" | string match -qi y
+                or exit 1
+            end
+            source $_nav_functions/dependency.fish -n nav mc
             or exit 1
         end
-        source $_nav_functions/dependency.fish -n nav mc
-        or exit 1
-    end
-    if test (string match -ar -- , $argv | wc -w) -gt 1
-        err "$cmd: More than 2 sequences of patterns were passed"
-        source $_nav_functions/instructions.fish "nav -c/--commander"
-        exit 1
-    end
-    set argv (string split -- , "$argv")
-
-# if not, check if the ranger option was invoked
-else if set --query _flag_R
-    if not type -qf ranger
-        if not set --query _flag_y
-            wrn "The installation of |ranger| is necessary to use the |--ranger| option"
-            read -n 1 -P "Install it? [y/n]:" | string match -qi y
+        if test (string match -ar -- , $argv | wc -w) -gt 1
+            err "$cmd: More than 2 sequences of patterns were passed"
+            source $_nav_functions/instructions.fish "nav -c/--commander"
+            exit 1
+        end
+    else
+        if not type -qf ranger
+            if not set --query _flag_y
+                wrn "The installation of |ranger| is necessary to use the |--ranger| option"
+                read -n 1 -P "Install it? [y/n]:" | string match -qi y
+                or exit 1
+            end
+            source $_nav_functions/dependency.fish -n nav ranger
             or exit 1
         end
-        source $_nav_functions/dependency.fish -n nav ranger
-        or exit 1
     end
     set argv (string split -- , "$argv")
 end
@@ -91,47 +90,37 @@ else
         end
         and set pool "$arg"
 
-
         # If not
         if test -z "$pool"
-            set --query _flag_e
-            or string match -vqr '[np]' "$flag"
-            or wrn -n "Searching..."
+            set arg (string split ' ' $arg)
+            string match -vqr '[np]' "$flag"
+            and not set --query _flag_e
+            and wrn -n "Searching..."
 
-            # To option: search for bookmarks
-            if string match -q $flag t
+            if string match -q t $flag
                 set pool (command find $_nav_bookmarks -type l 2>/dev/null \
                 | string match -r -- "(?<=$_nav_bookmarks/).+")
-                for pattern in (string split -- ' ' "$arg")
-                    set pool (string match -ei "$pattern" $pool)
-                end
-
-            # "forward", "nextd", "prevd" and "where" option: search for paths
+            else if string match -q f $flag
+                set pool (command find "$PWD" -type d -iname "*$arg[1]*")
+            else if string match -q w $flag
+                set pool (command locate -i (string match -r "^[^/ ]+" "$arg[1]"))
+            else if string match -q n $flag
+                set pool $dirnext
             else
-                if string match -q f $flag
-                    if test (command find "$PWD" -type d -maxdepth 1 2>/dev/null | wc -l) -eq 1
-                        err -o "nav: No folders were found within this directory"
-                        exit 1
-                    end
-                    set pool (command locate "$PWD")
-                else if string match -q w $flag
-                    set pool (command locate -i (string match -r "^[^/ ]+" "$arg"))
-                else if string match -q n $flag
-                    set pool $dirnext
-                else
-                    set pool $dirprev
-                end
+                set pool $dirprev
+            end
 
-                # Filter out hidden git folders, folders in the trash, or deleted folders
-                set pool (string match -vr '(\.git(/|$)|/Trash/)' $pool \
-                | string match -ei (string match -r "^\S+" "$arg"))
-                for filter in (string split " " "$arg")
-                    set pool (string match -aei "$filter" $pool)
-                end
-                for i in (command seq (count $pool) | command tac)
-                    test -d "$pool[$i]"
-                    or set --erase pool[$i]
-                end
+            # Filter pool for each passed pattern
+            for pattern in $arg
+                set pool (string match -ei "$pattern" $pool)
+            end
+
+            # Filter out hidden git folders, folders in the trash, or deleted folders
+            set pool (string match -vr '(\.git(/|$)|/Trash/)' $pool \
+            | string match -ei (string match -r "^\S+" "$arg"))
+            for result in $pool
+                test -d "$result"
+                or set pool (string match -v "$result" $pool)
             end
         end
         set --query _flag_e
@@ -147,7 +136,7 @@ else
             set -l list
 
             # List in order of relevance
-            if string match -qr '[wt]' $flag
+            if string match -qr '[wtf]' $flag
                 for match in $pool
                     string match -q t $flag
                     and set -l relevance (command grep -n\
@@ -173,7 +162,7 @@ else
 
             # And prompt the user to choose between the remaining matches
             command printf "%s\n" $list \
-            | command percol --query $arg \
+            | command percol --query "$arg" \
             | read pool
             or exit 1
         end

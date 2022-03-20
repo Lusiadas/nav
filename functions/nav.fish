@@ -35,7 +35,7 @@ function nav -d "⚓ Navigation Assistance with Velocity"
 
     # Call requested option
     if string match -qr -- '[twbfnpe]' $flags
-        source $_nav_subfunctions/navigate.fish -{$flags} $argv
+        source $_nav_subfunctions/navigate.fish -{$flags} "$argv"
     else if string match -qr -- '[srma]' $flags
         source $_nav_subfunctions/bookmark.fish -{$flags} $argv
     else if contains l $flags
